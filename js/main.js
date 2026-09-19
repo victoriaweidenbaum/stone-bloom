@@ -23,6 +23,15 @@
       });
     }, { rootMargin: '0px 0px -5% 0px' });
     fades.forEach(function (el) { io.observe(el); });
+
+    // Safety net: never leave content that is already on screen invisible
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        fades.forEach(function (el) {
+          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+        });
+      }, 1500);
+    });
   } else {
     fades.forEach(function (el) { el.classList.add('in'); });
   }
